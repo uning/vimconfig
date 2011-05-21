@@ -1,0 +1,112 @@
+
+let g:author  = "Tingkun"
+let g:email   = "tingkun@playcrab.com"
+let g:company = "Playcrab Corp."
+
+syntax on
+
+
+" ctags
+set tags+=~/.vim/systags
+
+" encoding
+"set encoding=utf-8
+set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-cn,euc-jp,euc-kr,latin1
+set termencoding=utf-8
+" set fileencoding of new file to utf-8
+"setglobal fenc=utf-8
+
+
+" Disable toolbar
+" set guioptions=
+" solve the problem that the alt key can't be used
+set winaltkeys=yes
+set noswapfile
+set winheight=10
+set nonu
+set hlsearch
+
+" man {{{
+runtime ftplugin/man.vim
+" }}}
+" {{{ vimgdb
+"set previewheight=12		" set gdb window initial height
+"run macros/gdb_mappings.vim	" source key mappings 
+"silent! set asm=0				" don't show any assembly stuff
+"set gdbprg=gdb_invocation		" set GDB invocation string (default 'gdb')
+" }}}
+" {{{ for vimptate
+let Vimplate= "~/.vim/vimplate.pl" 
+" }}}
+" {{{ for crefvim
+map <silent> <unique> <Leader>cC <Plug>CRV_CRefVimInvoke
+vmap <silent> <unique> <Leader>cR <Plug>CRV_CRefVimVisual
+nmap <silent> <unique> <Leader>cR <Plug>CRV_CRefVimNormal
+" }}}
+" {{{ for A
+let g:alternateExtensions_h = "cpp,c,cxx,cc"
+let g:alternateExtensions_H = "CPP,C,CXX,CC"
+" }}}
+" Autocomands {{{
+if has("autocmd")
+    " Autocommands for vim script {{{
+    augroup VimScript
+        autocmd!
+        autocmd BufWritePost *.vim	so <afile>:p | exec "normal zv"
+        autocmd BufWritePost ~/.gvimrc	so ~/.gvimrc | exec "normal zv"
+    augroup END
+    " }}}
+endif " if has("autocmd")
+" }}} Autocomands
+" mapping {{{
+nnoremap <C-S> :w<CR>
+inoremap <C-S> <C-O>:w<CR>
+nnoremap <SPACE> <C-F>
+nnoremap <S-SPACE> <C-B>
+inoremap <C-F> <C-O><C-F>
+inoremap <C-B> <C-O><C-B>
+inoremap <C-J> <C-O>j
+inoremap <C-K> <C-O>k
+"inoremap <C-H> <C-O>h
+inoremap <C-L> <C-O>l
+noremap <C-N> :browse e<CR>
+"noremap <BS> <C-O>x
+"
+map  <F10>      :set wrap <CR><C-W><C-W>  :set wrap <CR><C-W><C-W>
+imap  <F10>     :set wrap <CR><C-W><C-W>  :set wrap <CR><C-W><C-W>
+
+
+" Tlist {{{
+let g:Tlist_Use_Right_Window = 0
+" }}}
+
+
+set wildmenu
+set incsearch
+set ruler
+set autoindent
+set smartindent
+set smarttab
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set nobackup
+set hlsearch
+"set iskeyword+=33-47,58-64,91-96,123-128 
+set guifont=Yahei_Mono:h12:cGB2312
+set directory=$TEMP,$TMP,.
+set backspace=2
+set showcmd
+
+"set ignorecase
+
+
+
+" Modeline {{{
+" vim:set ts=4:
+" vim600:fdm=marker fdl=0 fdc=3
+" }}}
+
+
+

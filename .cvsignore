@@ -1,0 +1,7 @@
+vim/viminfo
+viminfo
+.*.sw?
+*.zip
+*.tar.gz
+vimrc-local*
+*.md5sums

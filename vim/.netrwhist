@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/hotel/vimconfig/vim/local/CVS'
+let g:netrw_dirhist_2='/home/hotel/backend_common/phplib'
+let g:netrw_dirhist_3='/newdisk/work/mall/pengyou/web/pengyou/tools'
