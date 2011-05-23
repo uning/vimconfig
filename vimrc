@@ -1,3 +1,5 @@
+
+
 "
 " vimconfig - project of powerful ViM 6.3 configuration files
 " 
@@ -169,7 +171,7 @@ set nostartofline
 set modeline
 
 " Available TAGS files
-set tags=./TAGS,./tags,tags
+set tags=./TAGS,./tags,tags,~/tags
 
 " Don't add EOF at end of file
 set noendofline

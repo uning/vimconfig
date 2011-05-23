@@ -2,3 +2,5 @@
 vim/local
 *.zip
 *.tgz
+viminfo
+vim/\.*

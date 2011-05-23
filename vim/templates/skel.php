@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * @FILE_EXT@
  *
  * Developed by @AUTHOR@ <@EMAIL@>
@@ -11,6 +11,4 @@
  * @DATE@ - created
  *
  */
-
-
 
