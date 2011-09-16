@@ -24,3 +24,8 @@ set errorformat=<b>%*[^<]</b>:\ \ %m\ in\ <b>%f</b>\ on\ line\ <b>%l</b><br\ />
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+set runtimepath+=~/.vim/php_doc
+set tags+=~/.vim/php_doc/doc/tags
+
+autocmd BufNewFile,Bufread *.ros,*.inc,*.php set keywordprg="help"

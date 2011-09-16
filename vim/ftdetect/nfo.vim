@@ -5,3 +5,4 @@ au BufNewFile,BufRead	*.nfo	setf nfo
 
 augroup END
 
+

@@ -19,7 +19,7 @@ set makeprg=php\ \-\l\ %\\\|\ grep\ '</b>\ on\ line\ <b>'
 
 " Error format seems to change between versions, if this script
 " doesn't seem to work, see if the format is incorrect
-set errorformat=<b>%*[^<]</b>:\ \ %m\ in\ <b>%f</b>\ on\ line\ <b>%l</b><br\ />
+set errorformat=%m\ in\ %f\ on\ line\ %l
 
 
 let &cpo = s:cpo_save

@@ -4,3 +4,8 @@ vim/local
 *.tgz
 viminfo
 vim/\.*
+*.gz
+doc
+.vimerr
+*.sw*
+t
