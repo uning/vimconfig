@@ -50,8 +50,6 @@ set incsearch
 set autoindent 
 
 let mapleader=";"
-"窗口切换  
-nmap <Space> <C-w><C-w>Space
 " Open and close the NERD_tree.vim separately
 nmap <F7> <ESC>:NERDTreeToggle<CR> 
 "打开Tlist
@@ -66,9 +64,14 @@ nnoremap <leader>b :FufBuffer<CR>
 nmap z <C-w><C-w>
 
 "tag快速追踪
-nmap tt <C-t> 
-nmap tg <C-]> 
+nmap tt <C-t>
+nmap tg <C-]>
 
+
+" 在新tab打开当前文件所在的目录
+map nt :tabnew %:h<CR>
+"tab窗口切换  
+nmap <Space>  <Esc>:tabn<CR>
 
 " 选中刚刚粘贴的行
 nnoremap <leader>v V`]
@@ -186,21 +189,21 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
 
 function! Execute_Script()
-    if &filetype == 'php'
-        :w
-        execute '!php %'
-    elseif &filetype == 'python'
-        :w
-        execute '!python %'
-    elseif &filetype == 'sh'
-        :w
-        execute '!bash -x %'
-    endif
+	if &filetype == 'php'
+		:w
+		execute '!php %'
+	elseif &filetype == 'python'
+		:w
+		execute '!python %'
+	elseif &filetype == 'sh'
+		:w
+		execute '!bash -x %'
+	endif
 endfunction
 
 " plframework
 set tags+=/home/hotel/mywork/plframework/tags
- 
+
 " vimrc被修改时自动重新加载
 autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost myvimrc source %
