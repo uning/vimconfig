@@ -237,8 +237,8 @@ vnoremap <C-S>		<C-C>:update<CR>
 inoremap <C-S>		<C-O>:update<CR>
 
 " CTRL-Z is Undo; not in cmdline though
-noremap <C-z> u
-inoremap <C-z> <C-O>u
+"noremap <C-Z> u
+"inoremap <C-Z> <C-O>u
 
 " CTRL-Y is Redo (although not repeat); not in cmdline though
 noremap <C-y> <C-R>
