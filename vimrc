@@ -81,6 +81,9 @@ inoremap jj <Esc>
 " 调用php 检查当前文件的语法
 map <F5> :call Execute_Script()<CR>
 
+" 支持bundle 下 配置 
+call pathogen#infect() 
+
 
 "js 设置
 autocmd filetype javascript call Set_js_options()
@@ -95,10 +98,10 @@ function! Set_js_options()
 			let winnum = winnr() " get current window number
 			let linenum = line('.')
 			let colnum = col('.')
-			let cmd =  "%!jsl -nologo -nofilelisting -nosummary -nocontext -conf ~/bin/jsl.conf -stdin | sed 's/^/".substitute(bufname("%"), '/', '\\/', "g")."/g' >.vimerr; cat"
+			let cmd =  "%!jsl -nologo -nofilelisting -nosummary -nocontext -conf ~/bin/jsl.conf -stdin | sed 's/^/".substitute(bufname("%"), '/', '\\/', "g")."/g' >~/.vimerr; cat"
 			"echo cmd
 			silent execute cmd
-			silent cf .vimerr
+			silent cf ~/.vimerr
 			cw 
 			" open the error window if it contains error
 			" return to the window with cursor set on the line of the first error (if any)
@@ -134,10 +137,11 @@ function! Set_php_options()
 			let winnum = winnr() " get current window number
 			let linenum = line('.')
 			let colnum = col('.')
-			let cmd =  "%!php -l -f /dev/stdin | sed 's/\\/dev\\/stdin/".substitute(bufname("%"), '/', '\\/', "g")."/g' >.vimerr; cat"
+			let cmd="%!php -l -f /dev/stdin | sed 's/\\/dev\\/stdin/".substitute(bufname("%"), '/', '\\/', "g")."/g' > ~/.vimerr; cat"
 			"echo cmd
+			
 			silent execute cmd
-			silent cf .vimerr
+			silent cf ~/.vimerr
 			cw 
 			" open the error window if it contains error
 			" return to the window with cursor set on the line of the first error (if any)

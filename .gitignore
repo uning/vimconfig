@@ -9,3 +9,4 @@ doc
 .vimerr
 *.sw*
 t
+vim/bundle
