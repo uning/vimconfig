@@ -85,6 +85,48 @@ map <F5> :call Execute_Script()<CR>
 call pathogen#infect() 
 
 
+"coffee 设置
+autocmd filetype coffee call Set_coffee_options()
+function! Set_coffee_options()
+	"执行脚本
+	map <leader>e :CoffeeRun <cr>
+	set makeprg="~/jsl -nologo -nofilelisting -nosummary -nocontext -conf ~/bin/jsl.conf -process %"
+	set errorformat=%f(%l):\ %m
+	if !exists('*CoffeesynCHK')
+		function! CoffeesynCHK()
+			ccl
+			let winnum = winnr() " get current window number
+			let linenum = line('.')
+			let colnum = col('.')
+			let cmd =  "%!coffee -c -s  | sed 's/^/".substitute(bufname("%"), '/', '\\/', "g")."/g' >~/.vimerr; cat"
+			"echo cmd
+			silent execute cmd
+			silent cf ~/.vimerr
+			cw 
+			" open the error window if it contains error
+			" return to the window with cursor set on the line of the first error (if any)
+			execute winnum . "wincmd w"
+			silent undo
+			silent cf
+			if 0 >= len(getqflist())
+				w
+				call cursor(linenum, colnum)
+				"echo "no error"
+			else
+				echo "error" 
+				"!cat  .vimerr 
+			endif
+		endfunction
+	endif
+	"au!  BufWriteCmd  *.coffee    call CoffeesynCHK()
+
+	" 折叠
+	au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
+	"检查语法
+	map <leader>c :!coffee -b -c -s < %  <CR>
+endfunction
+
+
 "js 设置
 autocmd filetype javascript call Set_js_options()
 function! Set_js_options()
@@ -122,8 +164,8 @@ function! Set_js_options()
 
 	"检查语法
 	map <leader>c :call JSsynCHK()<CR>
-
 endfunction
+
 "autocmd BufNewFile,Bufread *.php call Set_php_options()
 autocmd filetype php call Set_php_options()
 function! Set_php_options()
