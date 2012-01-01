@@ -251,6 +251,8 @@ install:
 			$(LN_S) "$$here/$$file" "$$HOME/.$$file"; \
 		fi; \
 	done
+	git submodule update --init
+
 
 # }}}
 

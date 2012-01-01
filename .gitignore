@@ -10,3 +10,4 @@ doc
 *.sw*
 t
 vim/bundle
+*.bak
