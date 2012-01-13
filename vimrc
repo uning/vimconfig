@@ -1,8 +1,4 @@
 
-"加载主要vimrc文件
-so  ~/.vim/vimrc-common
-"加载当前文件夹里vim配置
-
 
 "set t_Co=256
 "color mango
@@ -10,6 +6,46 @@ so  ~/.vim/vimrc-common
 let g:author  = "Tingkun"
 let g:email   = "tingkun@playcrab.com"
 let g:company = "Playcrab Corp."
+
+"加载主要vimrc文件
+so  ~/.vim/vimrc-common
+" use pathogen for plugins
+
+set nocompatible
+filetype off
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+
+
+
+" file type set 
+"-------------------------------------------
+"                 AUTO-COMMANDS
+"-------------------------------------------
+
+" json
+autocmd BufRead,BufNewFile *.json set filetype=javascript
+
+" jasmine fixtures
+autocmd BufRead,BufNewFile *.jasmine_fixture set filetype=html
+
+" ruby
+autocmd BufRead,BufNewFile *.thor set filetype=ruby
+autocmd BufRead,BufNewFile *.god set filetype=ruby
+autocmd BufRead,BufNewFile Gemfile* set filetype=ruby
+autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+autocmd BufRead,BufNewFile soloistrc set filetype=ruby
+autocmd FileType ruby imap  <Space>=><Space>
+
+" plain text
+autocmd BufRead,BufNewFile *.txt set filetype=text
+autocmd BufRead,BufNewFile *.text set filetype=text
+autocmd BufRead,BufNewFile *README* set filetype=text
+autocmd FileType text set autoindent
+" sh 
+autocmd BufRead,BufNewFile *.sh set filetype=sh
+
 
 syntax on
 
@@ -36,6 +72,10 @@ setglobal fenc=utf-8
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+
+" make and git files use real tabs
+autocmd FileType make set noexpandtab
+autocmd BufRead,BufNewFile .git* set noexpandtab
 
 " 不创建备份文件
 set nobackup
@@ -303,3 +343,5 @@ noremap <C-Tab> <C-W>w
 inoremap <C-Tab> <C-O><C-W>w
 cnoremap <C-Tab> <C-C><C-W>w
 onoremap <C-Tab> <C-C><C-W>w
+
+
