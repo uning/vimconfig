@@ -9,12 +9,12 @@ let g:company = "Playcrab Corp."
 
 "加载主要vimrc文件
 so  ~/.vim/vimrc-common
-" use pathogen for plugins
 
+" use pathogen for plugins
 set nocompatible
 filetype off
 call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+"call pathogen#helptags()   "too slow
 
 
 
@@ -204,6 +204,7 @@ function! Set_js_options()
 
 	"检查语法
 	map <leader>c :call JSsynCHK()<CR>
+	map <leader>t :!nodeunit %<cr>
 endfunction
 
 "autocmd BufNewFile,Bufread *.php call Set_php_options()

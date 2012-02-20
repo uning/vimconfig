@@ -88,3 +88,12 @@
 [submodule "vim/bundle/vim-jade"]
 	path = vim/bundle/vim-jade
 	url = git://github.com/statianzo/vim-jade.git
+[submodule "bundle/l9_vim_mirror"]
+	path = bundle/l9_vim_mirror
+	url = git://github.com/kairichard/l9_vim_mirror.git
+[submodule "vim/bundle/l9_vim_mirror"]
+	path = vim/bundle/l9_vim_mirror
+	url = git://github.com/kairichard/l9_vim_mirror.git
+[submodule "vim/bundle/c.vim"]
+	path = vim/bundle/c.vim
+	url = git://github.com/vim-scripts/c.vim.git
