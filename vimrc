@@ -16,41 +16,21 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 "call pathogen#helptags()   "too slow
 
+set runtimepath+=~/vim/bundle/vim_addon_manager
+call vam#ActivateAddons(['vim-haxe'], {'auto_install' : 1})
+" 支持bundle 下 配置 
+call pathogen#infect() 
 
 
-
-" file type set 
-"-------------------------------------------
-"                 AUTO-COMMANDS
-"-------------------------------------------
-
-" json
-autocmd BufRead,BufNewFile *.json set filetype=javascript
-
-" jasmine fixtures
-autocmd BufRead,BufNewFile *.jasmine_fixture set filetype=html
-
-" ruby
-autocmd BufRead,BufNewFile *.thor set filetype=ruby
-autocmd BufRead,BufNewFile *.god set filetype=ruby
-autocmd BufRead,BufNewFile Gemfile* set filetype=ruby
-autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
-autocmd BufRead,BufNewFile soloistrc set filetype=ruby
-autocmd FileType ruby imap  <Space>=><Space>
-
-" plain text
-autocmd BufRead,BufNewFile *.txt set filetype=text
-autocmd BufRead,BufNewFile *.text set filetype=text
-autocmd BufRead,BufNewFile *README* set filetype=text
-autocmd FileType text set autoindent
-" sh 
-autocmd BufRead,BufNewFile *.sh set filetype=sh
 
 
 syntax on
 
 " ctags
 set tags+=~/.vim/systags
+" plframework
+"set tags+=/home/hotel/mywork/plframework/tags
+set tags+=./tags
 
 " encoding
 "set encoding=utf-8
@@ -93,7 +73,8 @@ let mapleader=";"
 " Open and close the NERD_tree.vim separately
 nmap <F7> <ESC>:NERDTreeToggle<CR> 
 "打开Tlist
-nmap <F8> <ESC>:Tlist<CR> 
+"nmap <F8> <ESC>:Tlist<CR> 
+nmap <F8> :TagbarToggle<CR>
 " 打开当前目录
 nnoremap <leader>o :Explore<CR>
 "快速打开文件
@@ -121,175 +102,39 @@ inoremap jj <Esc>
 " 调用php 检查当前文件的语法
 map <F5> :call Execute_Script()<CR>
 
-" 支持bundle 下 配置 
-call pathogen#infect() 
 
 
-"coffee 设置
-autocmd filetype coffee call Set_coffee_options()
-function! Set_coffee_options()
-	"执行脚本
-	map <leader>e :CoffeeRun <cr>
-	set makeprg="~/jsl -nologo -nofilelisting -nosummary -nocontext -conf ~/bin/jsl.conf -process %"
-	set errorformat=%f(%l):\ %m
-	if !exists('*CoffeesynCHK')
-		function! CoffeesynCHK()
-			ccl
-			let winnum = winnr() " get current window number
-			let linenum = line('.')
-			let colnum = col('.')
-			let cmd =  "%!coffee -c -s  | sed 's/^/".substitute(bufname("%"), '/', '\\/', "g")."/g' >~/.vimerr; cat"
-			"echo cmd
-			silent execute cmd
-			silent cf ~/.vimerr
-			cw 
-			" open the error window if it contains error
-			" return to the window with cursor set on the line of the first error (if any)
-			execute winnum . "wincmd w"
-			silent undo
-			silent cf
-			if 0 >= len(getqflist())
-				w
-				call cursor(linenum, colnum)
-				"echo "no error"
-			else
-				echo "error" 
-				"!cat  .vimerr 
-			endif
-		endfunction
-	endif
-	"au!  BufWriteCmd  *.coffee    call CoffeesynCHK()
-
-	" 折叠
-	au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
-	"检查语法
-	map <leader>c :!coffee -b -c -s < %  <CR>
-endfunction
-
-
-"js 设置
-autocmd filetype javascript call Set_js_options()
-function! Set_js_options()
-	"执行脚本
-	map <leader>e :!node %<cr>
-	set makeprg="~/jsl -nologo -nofilelisting -nosummary -nocontext -conf ~/bin/jsl.conf -process %"
-	set errorformat=%f(%l):\ %m
-	if !exists('*JSsynCHK')
-		function! JSsynCHK()
-			ccl
-			let winnum = winnr() " get current window number
-			let linenum = line('.')
-			let colnum = col('.')
-			let cmd =  "%!jsl -nologo -nofilelisting -nosummary -nocontext -conf ~/bin/jsl.conf -stdin | sed 's/^/".substitute(bufname("%"), '/', '\\/', "g")."/g' >~/.vimerr; cat"
-			"echo cmd
-			silent execute cmd
-			silent cf ~/.vimerr
-			cw 
-			" open the error window if it contains error
-			" return to the window with cursor set on the line of the first error (if any)
-			execute winnum . "wincmd w"
-			silent undo
-			silent cf
-			if 0 >= len(getqflist())
-				w
-				call cursor(linenum, colnum)
-				"echo "no error"
-			else
-				echo "error" 
-				"!cat  .vimerr 
-			endif
-		endfunction
-	endif
-	au!  BufWriteCmd  *.js    call JSsynCHK()
-
-	"检查语法
-	map <leader>c :call JSsynCHK()<CR>
-	map <leader>t :!nodeunit %<cr>
-endfunction
-
-"autocmd BufNewFile,Bufread *.php call Set_php_options()
-autocmd filetype php call Set_php_options()
-function! Set_php_options()
-	"au!  BufWriteCmd       call PHPsynCHK()
-	au!  BufWriteCmd  *.php     call PHPsynCHK()
-	au!  BufWriteCmd  *.inc     call PHPsynCHK()
-
-	if !exists('*PHPsynCHK')
-		function! PHPsynCHK()
-			ccl
-			let winnum = winnr() " get current window number
-			let linenum = line('.')
-			let colnum = col('.')
-			let cmd="%!php -l -f /dev/stdin | sed 's/\\/dev\\/stdin/".substitute(bufname("%"), '/', '\\/', "g")."/g' > ~/.vimerr; cat"
-			"echo cmd
-			
-			silent execute cmd
-			silent cf ~/.vimerr
-			cw 
-			" open the error window if it contains error
-			" return to the window with cursor set on the line of the first error (if any)
-			execute winnum . "wincmd w"
-			silent undo
-			silent cf
-			if 1 == len(getqflist())
-				w
-				call cursor(linenum, colnum)
-				"echo "no error"
-			else
-				"echo "error" 
-			endif
-		endfunction
-	endif
-	"保存php文件前自动检查语法
-	set keywordprg="help"
-	map <leader>t :!phpunit %<cr>
-	"执行单个单测
-	map <leader>T [[f(b:!phpunit --filter <C-R><C-W> %<cr>
-
-	set errorformat=%m\ in\ %f\ on\ line\ %l
-	"检查语法
-	map <leader>c :call PHPsynCHK()<CR>
-
-	"执行php脚本
-	map <leader>e :!php %<cr>
-
-	"在原函数里执行单测
-	map <leader>m :!phpunit --filter test<C-R><C-W> tests/unittest/%:t:rTest.php <cr>
-	map tu :sp tests/unittest/%:t:rTest.php <cr>
-	map tf [[f(b:!phpunit --filter test<C-R><C-W> tests/unittest/%:t:rTest.php <cr>
-	map tr [[f(b:!phpunit  tests/unittest/%:t:rTest.php <cr>
-
-	let g:AutoComplPop_Behavior = {}
-	let g:AutoComplPop_Behavior['php'] = []
-	call add(g:AutoComplPop_Behavior['php'], {
-				\   'command'   : "\<C-x>\<C-o>", 
-				\   'pattern'   : printf('\(->\|::\|\$\)\k\{%d,}$', 0),
-				\   'repeat'    : 0,
-				\})
-endfunction
 autocmd FileType javascript set omnifunc=javascrīptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+" json
+autocmd BufRead,BufNewFile *.json set filetype=yaml
+
+" jasmine fixtures
+autocmd BufRead,BufNewFile *.jasmine_fixture set filetype=html
+
+" ruby
+autocmd BufRead,BufNewFile *.thor set filetype=ruby
+autocmd BufRead,BufNewFile *.god set filetype=ruby
+autocmd BufRead,BufNewFile Gemfile* set filetype=ruby
+autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+autocmd BufRead,BufNewFile soloistrc set filetype=ruby
+autocmd FileType ruby imap  <Space>=><Space>
+
+" plain text
+autocmd BufRead,BufNewFile *.txt set filetype=text
+autocmd BufRead,BufNewFile *.text set filetype=text
+autocmd BufRead,BufNewFile *README* set filetype=text
+autocmd FileType text set autoindent
+" sh 
+autocmd BufRead,BufNewFile *.sh set filetype=sh
 
 
 
-function! Execute_Script()
-	if &filetype == 'php'
-		:w
-		execute '!php %'
-	elseif &filetype == 'python'
-		:w
-		execute '!python %'
-	elseif &filetype == 'sh'
-		:w
-		execute '!bash -x %'
-	endif
-endfunction
 
-" plframework
-set tags+=/home/hotel/mywork/plframework/tags
+
 
 " vimrc被修改时自动重新加载
 autocmd! bufwritepost .vimrc source %

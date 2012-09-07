@@ -97,3 +97,10 @@
 [submodule "vim/bundle/c.vim"]
 	path = vim/bundle/c.vim
 	url = git://github.com/vim-scripts/c.vim.git
+[submodule "vim/bundle/vim-smartinput"]
+	path = vim/bundle/vim-smartinput
+	url = https://github.com/kana/vim-smartinput
+
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = http://github.com/majutsushi/tagbar

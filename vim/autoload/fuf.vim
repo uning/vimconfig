@@ -2,6 +2,7 @@
 " Copyright (c) 2007-2010 Takeshi NISHIDA
 "
 "=============================================================================
+"
 " LOAD GUARD {{{1
 
 if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
